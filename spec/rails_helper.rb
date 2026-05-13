@@ -48,9 +48,9 @@ RSpec.configure do |config|
   # config.use_active_record = false
 
   # RSpec Rails uses metadata to mix in different behaviours to your tests,
-  # for example enabling you to call `get` and `post` in request specs. e.g.:
+  # for example enabling you to call `get` and `post` in requests specs. e.g.:
   #
-  #     RSpec.describe UsersController, type: :request do
+  #     RSpec.describe UsersController, type: :requests do
   #       # ...
   #     end
   #

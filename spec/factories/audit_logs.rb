@@ -1,10 +1,9 @@
 FactoryBot.define do
   factory :audit_log do
-    auditable { nil }
-    user { nil }
-    action { "MyString" }
-    from_state { "MyString" }
-    to_state { "MyString" }
-    metadata { "" }
+    association :auditable, factory: :order
+    action { "state_change:approve" }
+    from_state { "pending" }
+    to_state { "approved" }
+    metadata { {} }
   end
 end
