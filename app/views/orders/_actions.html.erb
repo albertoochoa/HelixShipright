@@ -1,0 +1,15 @@
+<section id="<%= dom_id(order, :actions) %>">
+  <h2>Available actions</h2>
+  <% events = order.aasm.events(permitted: true).map(&:name) %>
+  <% if events.empty? %>
+    <p><em>No further actions available from state '<%= order.state %>'.</em></p>
+  <% else %>
+    <% events.each do |event| %>
+      <%= button_to event.to_s.titleize,
+                    transition_order_path(order, event: event),
+                    method: :post,
+                    data: { turbo_confirm: "#{event.to_s.titleize} order #{order.number}?" },
+                    form: { style: "display:inline" } %>
+    <% end %>
+  <% end %>
+</section>

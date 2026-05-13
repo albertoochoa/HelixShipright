@@ -1,10 +1,154 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    color: #222;
+}
+
+.topbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: #1a1f36;
+    color: #fff;
+}
+
+.topbar a, .topbar strong {
+    color: #fff;
+    text-decoration: none;
+}
+
+.topbar .who {
+    margin-left: auto;
+}
+
+main {
+    padding: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.flash {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.flash-notice {
+    background: #e0f2fe;
+    border: 1px solid #0284c7;
+}
+
+.flash-alert {
+    background: #fee2e2;
+    border: 1px solid #b91c1c;
+}
+
+.state-filter {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.state-filter a {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+}
+
+.state-filter a.active {
+    background: #1a1f36;
+    color: #fff;
+    border-color: #1a1f36;
+}
+
+.bulk-actions {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #f5f5f7;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+table.orders tbody tr:hover {
+    background: #fafafa;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    background: #eee;
+}
+
+.badge-pending {
+    background: #fef3c7;
+}
+
+.badge-approved {
+    background: #dbeafe;
+}
+
+.badge-shipped {
+    background: #ede9fe;
+}
+
+.badge-delivered {
+    background: #dcfce7;
+}
+
+.badge-cancelled {
+    background: #fee2e2;
+}
+
+.timeline ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+.timeline li {
+    padding: 0.5rem 0;
+    border-left: 3px solid #1a1f36;
+    padding-left: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.audit {
+    list-style: none;
+    padding: 0;
+}
+
+.audit li {
+    padding: 0.35rem 0;
+    border-bottom: 1px dotted #eee;
+}
+
+section {
+    margin-top: 1.5rem;
+}
+
+button, input[type="submit"] {
+    cursor: pointer;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid #1a1f36;
+    background: #1a1f36;
+    color: #fff;
+    border-radius: 4px;
+}
+
+button:hover, input[type="submit"]:hover {
+    background: #2a325c;
+}

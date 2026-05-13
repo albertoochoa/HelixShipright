@@ -1,0 +1,20 @@
+<div id="<%= dom_id(order, :tracking) %>" class="timeline">
+  <% events = order.tracking_events.chronological %>
+  <% if events.empty? %>
+    <p><em>No tracking events yet.</em></p>
+  <% else %>
+    <ol>
+      <% events.each do |event| %>
+        <li>
+          <strong><%= event.status.titleize %></strong>
+          — <%= event.location %>
+          <br>
+          <small><%= event.occurred_at.to_fs(:short) %></small>
+          <% if event.description.present? %>
+            <p><%= event.description %></p>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+</div>

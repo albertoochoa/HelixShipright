@@ -1,0 +1,44 @@
+<% content_for :title, "Orders" %>
+
+<h1>Orders</h1>
+
+<nav class="state-filter">
+  <%= link_to "All (#{@state_counts.values.sum})", orders_path, class: ("active" if @state_filter.blank?) %>
+  <% Order::STATES.each do |s| %>
+    <%= link_to "#{s.to_s.titleize} (#{@state_counts[s.to_s] || 0})",
+                orders_path(state: s),
+                class: ("active" if @state_filter == s.to_s) %>
+  <% end %>
+</nav>
+
+<%= form_with url: bulk_transition_orders_path, method: :post, local: true, id: "bulk-form" do |f| %>
+  <%= hidden_field_tag :state, @state_filter %>
+
+  <div class="bulk-actions">
+    <label>Bulk action:</label>
+    <%= select_tag :event,
+                   options_for_select([["Approve", "approve"],
+                                       ["Ship", "ship"],
+                                       ["Deliver", "deliver"],
+                                       ["Cancel", "cancel"]]),
+                   include_blank: "— choose —" %>
+    <%= submit_tag "Apply to selected", data: { confirm: "Apply to selected orders?" } %>
+  </div>
+
+  <table class="orders">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Number</th>
+      <th>Customer</th>
+      <th>Placed</th>
+      <th>State</th>
+      <th>Items</th>
+      <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render @orders %>
+    </tbody>
+  </table>
+<% end %>

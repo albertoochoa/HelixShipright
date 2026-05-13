@@ -1,0 +1,9 @@
+<tr id="<%= dom_id(order) %>">
+  <td><%= check_box_tag "order_ids[]", order.id %></td>
+  <td><%= link_to order.number, order %></td>
+  <td><%= order.customer_name %></td>
+  <td><%= order.placed_at.to_date.iso8601 %></td>
+  <td><span class="badge badge-<%= order.state %>"><%= order.state.titleize %></span></td>
+  <td><%= order.line_items.size %></td>
+  <td><%= number_to_currency(order.total_cents / 100.0) %></td>
+</tr>

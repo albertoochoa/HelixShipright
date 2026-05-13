@@ -1,0 +1,69 @@
+<% content_for :title, "Order #{@order.number}" %>
+
+<%= turbo_stream_from @order %>
+
+<p><%= link_to "← Back to orders", orders_path %></p>
+
+<h1>
+  <%= @order.number %>
+  <%= render "state_badge", order: @order %>
+</h1>
+
+<section>
+  <h2>Customer</h2>
+  <p>
+    <strong><%= @order.customer_name %></strong><br>
+    <%= @order.customer_email %><br>
+    <small><%= simple_format @order.shipping_address %></small>
+  </p>
+</section>
+
+<%= render "actions", order: @order %>
+
+<section>
+  <h2>Line items</h2>
+  <table class="line-items">
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Unit</th>
+      <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @order.line_items.includes(:product).each do |li| %>
+      <tr>
+        <td><%= li.product.name %> <small>(<%= li.product.sku %>)</small></td>
+        <td><%= li.quantity %></td>
+        <td><%= number_to_currency(li.unit_price_cents / 100.0) %></td>
+        <td><%= number_to_currency(li.subtotal_cents / 100.0) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+    <tr>
+      <th colspan="3">Total</th>
+      <th><%= number_to_currency(@order.total_cents / 100.0) %></th>
+    </tr>
+    </tfoot>
+  </table>
+</section>
+
+<section>
+  <h2>Tracking</h2>
+  <p>
+    Carrier: <%= @order.carrier.presence || "—" %><br>
+    Number:  <%= @order.tracking_number.presence || "—" %><br>
+    Last synced: <%= @order.tracking_synced_at&.iso8601 || "never" %>
+  </p>
+  <% if @order.tracking_number_present? %>
+    <%= button_to "Re-sync now", sync_tracking_order_path(@order), method: :post %>
+  <% end %>
+  <%= render "tracking_timeline", order: @order %>
+</section>
+
+<section>
+  <h2>Audit history</h2>
+  <%= render "audit_history", audit_logs: @audit_logs %>
+</section>

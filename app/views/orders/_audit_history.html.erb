@@ -1,0 +1,18 @@
+<% if audit_logs.empty? %>
+  <p><em>No audit entries yet.</em></p>
+<% else %>
+  <ul class="audit">
+    <% audit_logs.each do |log| %>
+      <li>
+        <code><%= log.action %></code>
+        <% if log.from_state.present? %>
+          : <%= log.from_state %> → <%= log.to_state %>
+        <% end %>
+        <small>
+          by <%= log.user&.email_address || "system" %>
+          at <%= log.created_at.to_fs(:short) %>
+        </small>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
