@@ -17,9 +17,9 @@ class Order < ApplicationRecord
   validates :state, inclusion: { in: STATES.map(&:to_s) }
 
   scope :by_state, ->(state) { where(state: state) if state.present? }
-  scope :most_recent, -> { order(created_at: :desc) }
+  scope :most_recent, -> { order(placed_at: :desc) }
 
-  after_commit :sync_tracking_events_on_ship, on: :update
+  after_commit :sync_tracking_on_ship, on: :update
 
   aasm column: "state", whiny_persistence: true do
     after_all_transitions :audit_state_change
@@ -44,11 +44,20 @@ class Order < ApplicationRecord
     end
   end
 
+  def total_cents
+    line_items.sum { |li| li.subtotal_cents }
+  end
+
   def tracking_number_present?
     tracking_number.present? && carrier.present?
   end
 
   private
+
+  def sync_tracking_on_ship
+    return unless saved_change_to_state? && state == "shipped"
+    SyncTrackingJob.perform_later(id)
+  end
 
   def audit_state_change
     event_name = aasm.current_event.to_s.chomp("!")
